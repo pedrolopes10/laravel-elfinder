@@ -112,6 +112,9 @@ class ElfinderController extends Controller
 
         $rootOptions = $this->app->config->get('elfinder.root_options', array());
         foreach ($roots as $key => $root) {
+			if($root['filesystem'] && $root['useLaravelFilesystem']){
+                $root['filesystem'] = app('filesystem')->disk($root['filesystem'])->getDriver();
+            }
             $roots[$key] = array_merge($rootOptions, $root);
         }
 
